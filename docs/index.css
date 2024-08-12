@@ -27,19 +27,14 @@ body, html {
 
 .overlay-message {
   position: absolute;
-  top: 10%;
+  top: 5%;
   width: 100%;
   font-size: 2vh;
   text-align: center;
-  color: #fff;
+  color: #623b3b;
   z-index: 3; /* Ensure it stays on top */
 }
 
-#camera-container h1 {
-  font-size: 2rem;
-  color: #fff;
-  margin: 0;
-}
 
 #video {
   position: absolute;
