@@ -26,7 +26,7 @@ async function initCameraKit() {
 
     const source = createMediaStreamSource(mediaStream, { cameraType: 'back' });
     await session.setSource(source);
-    session.source.setRenderSize(window.innerWidth, window.innerHeight);
+    session.source.setRenderSize(window.innerWidth*.8, window.innerHeight);
     session.play();
   } catch (error) {
     console.error('Error initializing camera kit or session:', error);

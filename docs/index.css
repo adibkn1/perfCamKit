@@ -1,23 +1,60 @@
-body {
+/* index.css */
+
+body, html {
   margin: 0;
   padding: 0;
-  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  font-family: Arial, sans-serif;
+  background-color: #111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden
 }
 
-#output-canvas {
+#camera-container {
+  position: relative;
+  width: 100vw; /* Full viewport width */
+  height: 100vh; /* Full viewport height */
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+.overlay-message {
+  position: absolute;
+  top: 10%;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+  z-index: 3; /* Ensure it stays on top */
+}
+
+#camera-container h1 {
+  font-size: 2rem;
+  color: #fff;
+  margin: 0;
+}
+
+#video {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
+  object-fit: cover; /* Ensures video fills the container */
+  z-index: 1; /* Below overlay, above canvas */
 }
 
 #canvas {
   position: absolute;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
+  z-index: 2; /* Above video, below overlay */
 }
-
-
