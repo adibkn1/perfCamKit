@@ -29,44 +29,28 @@ async function initCameraKit() {
 
   
 
-      const source = createMediaStreamSource(mediaStream, { cameraType: 'back' });
-      await session.setSource(source);
-      session.source.setRenderSize(window.innerWidth, window.innerHeight);
-      session.play();
-  
-      // Set canvas dimensions to match the window
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-  
-      // Draw video onto the canvas
-      function drawFrame() {
-        context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
-        requestAnimationFrame(drawFrame);
-      }
-  
-      // Start drawing the video frames onto the canvas
-      drawFrame();
-  
-      // Capture button functionality
-      document.getElementById('captureButton').addEventListener('click', () => {
-        captureScreenshot(canvas);
-      });
-  
-    } catch (error) {
-      console.error('Error initializing camera kit or session:', error);
+    const source = createMediaStreamSource(mediaStream, { cameraType: 'back' });
+    await session.setSource(source);
+    session.source.setRenderSize(window.innerWidth, window.innerHeight);
+    session.play();
+
+    // Set canvas dimensions to match the window
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // Draw video onto the canvas
+    function drawFrame() {
+      context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+      requestAnimationFrame(drawFrame);
     }
+
+    // Start drawing the video frames onto the canvas
+    drawFrame();
+    
+  } catch (error) {
+    console.error('Error initializing camera kit or session:', error);
   }
-  
-  function captureScreenshot(canvas) {
-    // Convert canvas content to data URL (image)
-    const dataURL = canvas.toDataURL('image/png');
-    // Create a temporary link element
-    const link = document.createElement('a');
-    link.href = dataURL;
-    link.download = 'screenshot.png';
-    // Simulate a click to download the image
-    link.click();
-  }
-  
-  // Initialize the camera kit on page load
-  document.addEventListener('DOMContentLoaded', initCameraKit);
+}
+
+// Initialize the camera kit on page load
+document.addEventListener('DOMContentLoaded', initCameraKit);

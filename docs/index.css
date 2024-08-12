@@ -10,14 +10,13 @@ body, html {
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: hidden
 }
 
 #camera-container {
   position: relative;
   width: 100vw; /* Full viewport width */
   height: 100vh; /* Full viewport height */
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(50, 30, 30, 0.8);
   display: flex;
   justify-content: center;
   align-items: center;
