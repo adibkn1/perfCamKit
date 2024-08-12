@@ -47,9 +47,33 @@ async function initCameraKit() {
     // Start drawing the video frames onto the canvas
     drawFrame();
     
-  } catch (error) {
-    console.error('Error initializing camera kit or session:', error);
-  }
+  // Capture button functionality
+  document.getElementById('captureButton').addEventListener('click', () => {
+    captureScreenshot(canvas);
+  });
+
+} catch (error) {
+  console.error('Error initializing camera kit or session:', error);
+}
+}
+
+function captureScreenshot(canvas) {
+  // Convert canvas content to data URL (image)
+  canvas.toBlob((blob) => {
+    // Create a temporary link element
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'screenshot.png';
+
+    // Append the link to the document
+    document.body.appendChild(link);
+
+    // Simulate a click to download the image
+    link.click();
+
+    // Remove the link after triggering download
+    link.parentNode.removeChild(link);
+  }, 'image/png');
 }
 
 // Initialize the camera kit on page load
