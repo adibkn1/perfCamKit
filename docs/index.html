@@ -5,16 +5,31 @@
     <link href="index.css" rel="stylesheet">
 </head>
 <body>
+    <!-- Form Container -->
+    <div id="form-container" style="display: none;">
+        <input type="text" id="sisterName" placeholder="Sister's Name">
+        <input type="text" id="brotherName" placeholder="Brother's Name">
+        <input type="checkbox" id="terms">
+        <label for="terms">Accept Terms and Conditions</label>
+        <button onclick="submitRakhi()">Send Rakhi</button>
+    </div>
+
+    <!-- Receiver Container -->
+    <div id="receiver-container" style="display: none;">
+        <p id="message-display">Hey, [Brother's Name], your sister [Sister's Name] sent you a Rakhi!</p>
+        <button onclick="showCamera()">Tap to Experience</button>
+    </div>
+
+    <!-- Camera Container -->
     <div id="camera-container">
         <div class="overlay-message">
             <h1 id="greeting-overlay">Loading...</h1>
         </div>
-
         <video id="video" autoplay muted playsinline></video>
         <canvas id="canvas"></canvas>
         <button id="captureButton">Capture Screenshot</button>
+    </div>
 
-    </div>    
     <script src="./packed.js"></script>
 </body>
 </html>
