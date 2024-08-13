@@ -1,27 +1,35 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="index.css" rel="stylesheet">
+    <title>Digital Rakhi</title>
 </head>
 <body>
     <!-- Form Container -->
-    <div id="form-container" style="display: none;">
-        <input type="text" id="sisterName" placeholder="Sister's Name">
-        <input type="text" id="brotherName" placeholder="Brother's Name">
-        <input type="checkbox" id="terms">
-        <label for="terms">Accept Terms and Conditions</label>
-        <button onclick="submitRakhi()">Send Rakhi</button>
+    <div id="form-container" class="container">
+        <div class="form-content">
+            <input type="text" id="sisterName" placeholder="Sister's Name" required>
+            <input type="text" id="brotherName" placeholder="Brother's Name" required>
+            <div class="terms-container">
+                <input type="checkbox" id="terms" required>
+                <label for="terms">Accept Terms and Conditions</label>
+            </div>
+            <button id="sendButton">Send Rakhi</button>
+        </div>
     </div>
 
     <!-- Receiver Container -->
-    <div id="receiver-container" style="display: none;">
-        <p id="message-display">Hey, [Brother's Name], your sister [Sister's Name] sent you a Rakhi!</p>
-        <button onclick="showCamera()">Tap to Experience</button>
+    <div id="receiver-container" class="container" style="display: none;">
+        <div class="receiver-content">
+            <p id="receiverMessage">Hey, [Brother's Name], your sister [Sister's Name] sent you a Rakhi!</p>
+            <button id="experienceButton">Tap to Experience</button>
+        </div>
     </div>
 
     <!-- Camera Container -->
-    <div id="camera-container">
+    <div id="camera-container" class="container" style="display: none;">
         <div class="overlay-message">
             <h1 id="greeting-overlay">Loading...</h1>
         </div>

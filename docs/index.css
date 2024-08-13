@@ -1,118 +1,109 @@
-/* index.css */
-
-body, html {
+/* General resets */
+html, body {
   margin: 0;
   padding: 0;
-  height: 100%;
   width: 100%;
+  height: 100%;
   font-family: Arial, sans-serif;
-  background-color: #111;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden; /* Ensure no scrolling */
-  background-color: #ccc;
+  background-color: #f4f4f4;
 }
 
-/* Container that covers the entire screen */
+/* Universal container styles */
 .container {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  display: flex;
+  display: none;
   justify-content: center;
   align-items: center;
   background-size: cover;
   background-position: center;
 }
 
-/* Specific styles for the form content */
-.form-content {
-  background: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
-  padding: 30px;
+#form-container {
+  width: 100vw;
+  height: 100vh;
+  background: url(Images/rakhiImage.png) no-repeat center center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+
+
+.form-content {
+  width: 50%;
+  margin: 0 auto;
   text-align: center;
-  width: 90%; /* Responsive width */
-  max-width: 400px; /* Maximum width */
+  padding: 20px;
 }
 
-/* Style for headings inside form */
-.form-content h2 {
-  color: #384c20;
-  margin-bottom: 20px;
-}
-
-/* Style for input fields */
-input[type="text"], input[type="checkbox"] {
-  width: calc(100% - 20px);
+input[type="text"] {
+  width: 100%; /* Full width */
   padding: 10px;
-  margin-top: 10px;
+  margin: 10px;
   border: 1px solid #ccc;
   border-radius: 4px;
+  box-sizing: border-box;
 }
 
-/* Style for checkbox label */
-label {
-  display: block;
-  margin-top: 10px;
-  cursor: pointer;
+.terms-container {
+  transform: scale(1);
+  margin: 10px; 
+  text-align: left; 
 }
 
-/* Style for button */
 button {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   margin-top: 20px;
   background-color: #007bff;
   color: white;
   border: none;
   border-radius: 4px;
+  font-size: 16px;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
   background-color: #0056b3;
 }
 
+/* Receiver Container styles */
+#receiver-container {
+  width: 100vw;
+  height: 100vh;
+  background: url(Images/rakhiImage.png) no-repeat center center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  text-align: center;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+/* Camera Container styles */
+#camera-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+}
 
 .overlay-message {
   position: absolute;
-  top: 5%;
-  width: 100%;
-  font-size: max(2vh, 16px); /* Minimum readable size */
-  text-align: center;
-  color: #fff;
-  z-index: 3; /* Ensure it stays on top */
-}
-
-#canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 2; /* Above video, below overlay */
-}
-
-#captureButton {
-  position: absolute;
-  bottom: 5%;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 10px 20px;
-  background-color: #007bff;
+  top: 20px;
+  right: 20px;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.7);
   color: white;
-  border: none;
-  border-radius: 5px;
-  font-size: 26px;
-  cursor: pointer;
-  z-index: 3; /* Ensures button is clickable and on top */
-}
-
-#captureButton:hover, #captureButton:focus {
-  background-color: #0056b3;
-  outline: none; /* Remove default focus outline and replace as necessary */
+  border-radius: 4px;
+  font-size: 14px;
 }
