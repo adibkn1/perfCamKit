@@ -11,7 +11,7 @@ async function initCameraKit() {
 
     // Configure media stream with high resolution
     let mediaStream = await navigator.mediaDevices.getUserMedia({
-      video: { width: 1280, height: 720, facingMode: 'environment' } // Reduced resolution for better performance
+      video: { width: window.innerWidth, height: window.innerHeight, facingMode: 'environment' } // Reduced resolution for better performance
     });
 
     // Create a new session
