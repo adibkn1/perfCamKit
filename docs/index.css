@@ -1,90 +1,23 @@
-body, html {
+body {
   margin: 0;
   padding: 0;
-  height: 100vh;
-  width: 100vw;
-  font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  overflow: hidden;
 }
 
-.container {
-  width: 100vw;
-  height: 100vh;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-#senderForm {
-  width: 100vw;
-  height: 100vh;
-  text-align: center;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.form-group {
-  margin: 0 auto;
-  max-width: 300px;
-}
-
-.input-wrapper {
-  margin-bottom: 15px;
-}
-
-input[type="text"], input[type="checkbox"] {
+#output-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-.submit-button {
-  padding: 8px 16px;
-  background-color: #007BFF;
-  color: white;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  font-size: 14px;
-  text-transform: uppercase;
-}
-
-.submit-button:hover {
-  background-color: #0056b3;
-}
-
-#camera-container {
-  width: 100vw;
-  height: 100vh;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background: #000;
+  height: 100%;
 }
 
 #canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
-  object-fit: cover;
 }
 
-#captureButton {
-  padding: 10px 20px;
-  background-color: #FF5733;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-}
 
-#captureButton:hover {
-  background-color: #C70039;
-}
