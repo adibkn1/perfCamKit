@@ -3,8 +3,8 @@
 body, html {
   margin: 0;
   padding: 0;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   font-family: Arial, sans-serif;
   background-color: #111;
   display: flex;
@@ -14,8 +14,8 @@ body, html {
 
 #camera-container {
   position: relative;
-  width: 100vw; /* Full viewport width */
-  height: 100vh; /* Full viewport height */
+  width: 100%; /* Full viewport width */
+  height: 100%; /* Full viewport height */
   background-color: rgba(50, 30, 30, 0.8);
   display: flex;
   justify-content: center;

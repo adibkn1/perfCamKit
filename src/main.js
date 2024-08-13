@@ -1,5 +1,3 @@
-
-
 import {
   bootstrapCameraKit,
   createMediaStreamSource,
@@ -11,9 +9,8 @@ async function initCameraKit() {
       apiToken: 'eyJhbGciOiJIUzI1NiIsImtpZCI6IkNhbnZhc1MyU0hNQUNQcm9kIiwidHlwIjoiSldUIn0.eyJhdWQiOiJjYW52YXMtY2FudmFzYXBpIiwiaXNzIjoiY2FudmFzLXMyc3Rva2VuIiwibmJmIjoxNzA2NzExNzk4LCJzdWIiOiJhNWQ0ZjU2NC0yZTM0LTQyN2EtODI1Ni03OGE2NTFhODc0ZTR-U1RBR0lOR35mMzBjN2JmNy1lNjhjLTRhNzUtOWFlNC05NmJjOTNkOGIyOGYifQ.xLriKo1jpzUBAc1wfGpLVeQ44Ewqncblby-wYE1vRu0'
     });
 
-    
-     // Configure media stream with high resolution
-     let mediaStream = await navigator.mediaDevices.getUserMedia({
+    // Configure media stream with high resolution
+    let mediaStream = await navigator.mediaDevices.getUserMedia({
       video: { width: 4096, height: 2160, facingMode: 'environment' }
     });
 
@@ -23,11 +20,8 @@ async function initCameraKit() {
     const context = canvas.getContext('2d');
     const videoElement = session.output.live; // Get the video feed element
 
-
     const { lenses } = await cameraKit.lensRepository.loadLensGroups(['fdd0879f-c570-490e-9dfc-cba0f122699f']);
-      session.applyLens(lenses[0]);
-
-  
+    session.applyLens(lenses[0]);
 
     const source = createMediaStreamSource(mediaStream, { cameraType: 'back' });
     await session.setSource(source);
@@ -38,23 +32,30 @@ async function initCameraKit() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    // Draw video onto the canvas
+    // Function to draw the video and overlay text onto the canvas
     function drawFrame() {
       context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+
+      // Add overlay text to the canvas
+      context.font = '30px Arial';
+      context.fillStyle = 'white';
+      context.textAlign = 'center';
+      context.fillText('Overlay Text Example', canvas.width / 2, 20);
+
       requestAnimationFrame(drawFrame);
     }
 
     // Start drawing the video frames onto the canvas
     drawFrame();
-    
-  // Capture button functionality
-  document.getElementById('captureButton').addEventListener('click', () => {
-    captureScreenshot(canvas);
-  });
 
-} catch (error) {
-  console.error('Error initializing camera kit or session:', error);
-}
+    // Capture button functionality
+    document.getElementById('captureButton').addEventListener('click', () => {
+      captureScreenshot(canvas);
+    });
+
+  } catch (error) {
+    console.error('Error initializing camera kit or session:', error);
+  }
 }
 
 function captureScreenshot(canvas) {
