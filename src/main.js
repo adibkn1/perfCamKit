@@ -58,23 +58,45 @@ async function initCameraKit() {
   }
 }
 
-function captureScreenshot(canvas) {
-  // Convert canvas content to data URL (image)
-  canvas.toBlob((blob) => {
-    // Create a temporary link element
-    const link = document.createElement('a');
-    link.href = URL.createObjectURL(blob);
-    link.download = 'screenshot.png';
+async function captureScreenshot(canvas) {
+  // Convert canvas content to a Blob
+  canvas.toBlob(async (blob) => {
+    if (!blob) return;
 
-    // Append the link to the document
-    document.body.appendChild(link);
-
-    // Simulate a click to download the image
-    link.click();
-
-    // Remove the link after triggering download
-    link.parentNode.removeChild(link);
+    // Check if the Web Share API is supported
+    if (navigator.canShare && navigator.canShare({ files: [new File([blob], 'screenshot.png', { type: 'image/png' })] })) {
+      try {
+        await navigator.share({
+          files: [new File([blob], 'screenshot.png', { type: 'image/png' })],
+          title: 'Screenshot',
+          text: 'Check out this screenshot!',
+        });
+        console.log('Image shared successfully');
+      } catch (error) {
+        console.error('Error sharing image:', error);
+        downloadImage(blob); // Fallback to download if sharing fails
+      }
+    } else {
+      // Fallback to download if sharing is not supported
+      downloadImage(blob);
+    }
   }, 'image/png');
+}
+
+function downloadImage(blob) {
+  // Create a temporary link element
+  const link = document.createElement('a');
+  link.href = URL.createObjectURL(blob);
+  link.download = 'screenshot.png';
+
+  // Append the link to the document
+  document.body.appendChild(link);
+
+  // Simulate a click to download the image
+  link.click();
+
+  // Remove the link after triggering download
+  link.parentNode.removeChild(link);
 }
 
 // Initialize the camera kit on page load
