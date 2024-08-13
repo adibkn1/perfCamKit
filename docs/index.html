@@ -1,20 +1,22 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="utf-8">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <link href="index.css" rel="stylesheet">
+    <title>Digital Rakhi</title>
 </head>
 <body>
-    <div id="camera-container" style="display: none;">
+ 
+    <!-- Camera Container -->
+    <div id="camera-container" class="container">
         <div class="overlay-message">
-          <h1 id="greeting-overlay">Loading...</h1>
+            <h1 id="greeting-overlay">Loading...</h1>
         </div>
         <canvas id="canvas"></canvas>
-        <video id="video" style="display: none;" autoplay muted playsinline></video>
-      </div>    
+        <button id="captureButton">Capture Screenshot</button>
+    </div>
 
-    
     <script src="./packed.js"></script>
 </body>
 </html>

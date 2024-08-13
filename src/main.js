@@ -1,5 +1,3 @@
-
-
 import {
   bootstrapCameraKit,
   createMediaStreamSource,
@@ -18,19 +16,65 @@ async function initCameraKit() {
 
     // Create a new session
     const session = await cameraKit.createSession();
-    document.body.appendChild(session.output.live);
-    const { lenses } = await cameraKit.lensRepository.loadLensGroups(['fdd0879f-c570-490e-9dfc-cba0f122699f']);
-      session.applyLens(lenses[0]);
+    const canvas = document.getElementById('canvas');
+    const context = canvas.getContext('2d');
+    const videoElement = session.output.live; // Get the video feed element
 
-  
+    const { lenses } = await cameraKit.lensRepository.loadLensGroups(['fdd0879f-c570-490e-9dfc-cba0f122699f']);
+    session.applyLens(lenses[0]);
 
     const source = createMediaStreamSource(mediaStream, { cameraType: 'back' });
     await session.setSource(source);
     session.source.setRenderSize(window.innerWidth, window.innerHeight);
     session.play();
+
+    // Set canvas dimensions to match the window
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    // Function to draw the video and overlay text onto the canvas
+    function drawFrame() {
+      context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
+
+      // Add overlay text to the canvas
+      context.font = '30px Arial';
+      context.fillStyle = 'white';
+      context.textAlign = 'center';
+      context.fillText('Overlay Text Example', canvas.width / 2, 20);
+
+      requestAnimationFrame(drawFrame);
+    }
+
+    // Start drawing the video frames onto the canvas
+    drawFrame();
+
+    // Capture button functionality
+    document.getElementById('captureButton').addEventListener('click', () => {
+      captureScreenshot(canvas);
+    });
+
   } catch (error) {
     console.error('Error initializing camera kit or session:', error);
   }
+}
+
+function captureScreenshot(canvas) {
+  // Convert canvas content to data URL (image)
+  canvas.toBlob((blob) => {
+    // Create a temporary link element
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'screenshot.png';
+
+    // Append the link to the document
+    document.body.appendChild(link);
+
+    // Simulate a click to download the image
+    link.click();
+
+    // Remove the link after triggering download
+    link.parentNode.removeChild(link);
+  }, 'image/png');
 }
 
 // Initialize the camera kit on page load
