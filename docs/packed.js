@@ -35720,15 +35720,10 @@ async function initCameraKit() {
       apiToken: 'eyJhbGciOiJIUzI1NiIsImtpZCI6IkNhbnZhc1MyU0hNQUNQcm9kIiwidHlwIjoiSldUIn0.eyJhdWQiOiJjYW52YXMtY2FudmFzYXBpIiwiaXNzIjoiY2FudmFzLXMyc3Rva2VuIiwibmJmIjoxNzA2NzExNzk4LCJzdWIiOiJhNWQ0ZjU2NC0yZTM0LTQyN2EtODI1Ni03OGE2NTFhODc0ZTR-U1RBR0lOR35mMzBjN2JmNy1lNjhjLTRhNzUtOWFlNC05NmJjOTNkOGIyOGYifQ.xLriKo1jpzUBAc1wfGpLVeQ44Ewqncblby-wYE1vRu0'
     });
 
-    // Configure media stream with high resolution for desktop, lower for mobile
-    let constraints = {
-      video: { 
-        width: window.innerWidth > 768 ? 4096 : 1920, 
-        height: window.innerWidth > 768 ? 2160 : 1080, 
-        facingMode: 'environment' 
-      }
-    };
-    let mediaStream = await navigator.mediaDevices.getUserMedia(constraints);
+    // Configure media stream with high resolution
+    let mediaStream = await navigator.mediaDevices.getUserMedia({
+      video: { width: 4096, height: 2160, facingMode: 'environment' }
+    });
 
     // Create a new session
     const session = await cameraKit.createSession();
@@ -35744,53 +35739,25 @@ async function initCameraKit() {
     session.source.setRenderSize(window.innerWidth, window.innerHeight);
     session.play();
 
-    // Function to resize the canvas to match the available viewport
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+    // Set canvas dimensions to match the window
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-      // Adjust session render size
-      session.source.setRenderSize(canvas.width, canvas.height);
-    }
-
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas(); // Initial resize
-
-    // Draw video and overlay text onto the canvas
+    // Function to draw the video and overlay text onto the canvas
     function drawFrame() {
-      const videoAspectRatio = videoElement.videoWidth / videoElement.videoHeight;
-      const canvasAspectRatio = canvas.width / canvas.height;
-
-      let drawWidth, drawHeight, offsetX, offsetY;
-
-      if (canvasAspectRatio > videoAspectRatio) {
-        // Canvas is wider than video
-        drawHeight = canvas.height;
-        drawWidth = videoAspectRatio * drawHeight;
-        offsetX = (canvas.width - drawWidth) / 2;
-        offsetY = 0;
-      } else {
-        // Canvas is taller than video
-        drawWidth = canvas.width;
-        drawHeight = drawWidth / videoAspectRatio;
-        offsetX = 0;
-        offsetY = (canvas.height - drawHeight) / 2;
-      }
-
-      context.clearRect(0, 0, canvas.width, canvas.height);
-      context.drawImage(videoElement, offsetX, offsetY, drawWidth, drawHeight);
+      context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
 
       // Add overlay text to the canvas
       context.font = '30px Arial';
       context.fillStyle = 'white';
       context.textAlign = 'center';
-      context.fillText('Overlay Text Example', canvas.width / 2, 40);
+      context.fillText('Overlay Text Example', canvas.width / 2, 20);
 
       requestAnimationFrame(drawFrame);
     }
 
     // Start drawing the video frames onto the canvas
-    videoElement.addEventListener('loadeddata', drawFrame);
+    drawFrame();
 
     // Capture button functionality
     document.getElementById('captureButton').addEventListener('click', () => {

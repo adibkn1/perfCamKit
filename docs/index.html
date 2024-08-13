@@ -7,12 +7,28 @@
     <title>Digital Rakhi</title>
 </head>
 <body>
- 
+
+    <!-- Sender Form -->
+    <div id="senderForm" class="container">
+        <form id="rakhiForm" class="form-group">
+            <div class="input-wrapper">
+                <input id="sisterName" type="text" placeholder="Sister's Name" required>
+            </div>
+            <div class="input-wrapper">
+                <input id="brotherName" type="text" placeholder="Brother's Name" required>
+            </div>
+            <div class="input-wrapper">
+                <label>
+                    <input id="terms" type="checkbox" required>
+                    I accept the terms and conditions.
+                </label>
+            </div>
+            <button type="submit" class="submit-button">Send Digital Rakhi</button>
+        </form>
+    </div>
+
     <!-- Camera Container -->
     <div id="camera-container" class="container">
-        <div class="overlay-message">
-            <h1 id="greeting-overlay">Loading...</h1>
-        </div>
         <canvas id="canvas"></canvas>
         <button id="captureButton">Capture Screenshot</button>
     </div>

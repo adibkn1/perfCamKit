@@ -9,16 +9,19 @@ async function initCameraKit() {
       apiToken: 'eyJhbGciOiJIUzI1NiIsImtpZCI6IkNhbnZhc1MyU0hNQUNQcm9kIiwidHlwIjoiSldUIn0.eyJhdWQiOiJjYW52YXMtY2FudmFzYXBpIiwiaXNzIjoiY2FudmFzLXMyc3Rva2VuIiwibmJmIjoxNzA2NzExNzk4LCJzdWIiOiJhNWQ0ZjU2NC0yZTM0LTQyN2EtODI1Ni03OGE2NTFhODc0ZTR-U1RBR0lOR35mMzBjN2JmNy1lNjhjLTRhNzUtOWFlNC05NmJjOTNkOGIyOGYifQ.xLriKo1jpzUBAc1wfGpLVeQ44Ewqncblby-wYE1vRu0'
     });
 
-    // Configure media stream with high resolution
+
     let mediaStream = await navigator.mediaDevices.getUserMedia({
       video: { width: 4096, height: 2160, facingMode: 'environment' }
     });
 
-    // Create a new session
     const session = await cameraKit.createSession();
     const canvas = document.getElementById('canvas');
-    const context = canvas.getContext('2d');
-    const videoElement = session.output.live; // Get the video feed element
+    const videoElement = session.output.live;
+
+    // Ensure the live output replaces the canvas for the video feed
+    if (canvas) {
+      canvas.parentElement.replaceChild(videoElement, canvas);
+    }
 
     const { lenses } = await cameraKit.lensRepository.loadLensGroups(['fdd0879f-c570-490e-9dfc-cba0f122699f']);
     session.applyLens(lenses[0]);
@@ -28,29 +31,8 @@ async function initCameraKit() {
     session.source.setRenderSize(window.innerWidth, window.innerHeight);
     session.play();
 
-    // Set canvas dimensions to match the window
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    // Function to draw the video and overlay text onto the canvas
-    function drawFrame() {
-      context.drawImage(videoElement, 0, 0, canvas.width, canvas.height);
-
-      // Add overlay text to the canvas
-      context.font = '30px Arial';
-      context.fillStyle = 'white';
-      context.textAlign = 'center';
-      context.fillText('Overlay Text Example', canvas.width / 2, 20);
-
-      requestAnimationFrame(drawFrame);
-    }
-
-    // Start drawing the video frames onto the canvas
-    drawFrame();
-
-    // Capture button functionality
     document.getElementById('captureButton').addEventListener('click', () => {
-      captureScreenshot(canvas);
+      captureScreenshot(videoElement);
     });
 
   } catch (error) {
@@ -58,24 +40,19 @@ async function initCameraKit() {
   }
 }
 
-function captureScreenshot(canvas) {
-  // Convert canvas content to data URL (image)
-  canvas.toBlob((blob) => {
-    // Create a temporary link element
+function captureScreenshot(videoElement) {
+  const tempCanvas = document.createElement('canvas');
+  const context = tempCanvas.getContext('2d');
+  tempCanvas.width = videoElement.videoWidth;
+  tempCanvas.height = videoElement.videoHeight;
+  context.drawImage(videoElement, 0, 0, tempCanvas.width, tempCanvas.height);
+
+  tempCanvas.toBlob((blob) => {
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
     link.download = 'screenshot.png';
-
-    // Append the link to the document
-    document.body.appendChild(link);
-
-    // Simulate a click to download the image
     link.click();
-
-    // Remove the link after triggering download
-    link.parentNode.removeChild(link);
   }, 'image/png');
 }
 
-// Initialize the camera kit on page load
 document.addEventListener('DOMContentLoaded', initCameraKit);
